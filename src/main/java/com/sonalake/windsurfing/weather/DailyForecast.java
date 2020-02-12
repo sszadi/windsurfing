@@ -1,9 +1,11 @@
 package com.sonalake.windsurfing.weather;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
 
+import java.util.List;
+@JsonIgnoreProperties(ignoreUnknown = true)
+@Data
 class DailyForecast{
-	private String summary;
-	private String icon;
 	private List<DailyForecastData> data;
 }

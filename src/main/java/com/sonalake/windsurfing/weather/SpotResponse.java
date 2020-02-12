@@ -1,11 +1,9 @@
 package com.sonalake.windsurfing.weather;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.Data;
 
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Builder
 class SpotResponse {
 

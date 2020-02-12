@@ -18,7 +18,7 @@ class SpotRestController {
 
 	@GetMapping("spot")
 	public SpotResponse findBestPlaceToWindsurfing(
-		@RequestParam(value = "date") @DateTimeFormat(pattern = "yyyy-mm-dd") LocalDate date) {
+		@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
 		log.info("Find best spot to windsurfing on {}", date);
 		SpotResponse spotResponse = spotService.findBestSpotToWindsurfing(date);
 		log.info("Best spot to windsurfing on {}: {}", date, spotResponse);

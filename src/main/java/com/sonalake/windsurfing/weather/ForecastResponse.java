@@ -1,11 +1,10 @@
 package com.sonalake.windsurfing.weather;
 
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
 class ForecastResponse {
-	private int longitude;
-	private int latitude;
-	private String timezone;
-	private int offset;
 	private DailyForecast daily;
-	private String formattedAddress;
-	private String searchAddress;
 }

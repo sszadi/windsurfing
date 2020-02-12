@@ -1,17 +1,16 @@
 package com.sonalake.windsurfing.weather;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-
-import java.time.LocalDateTime;
-//@JsonIgnoreProperties(ignoreUnknown = true)
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
+@JsonIgnoreProperties(ignoreUnknown = true)
+@Data
 class DailyForecastData {
-	private double temperatureMin;
 	private double temperatureMax;
-
-	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	private LocalDateTime temperatureMinTime;
-
-	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	private LocalDateTime temperatureMaxTime;
+	private double temperatureMin;
+	private double temperature;
+	private double windSpeed;
+	private double uvIndex;
+	private float precipProbability;
+	private String summary;
+	private double sunsetTime;
 }
