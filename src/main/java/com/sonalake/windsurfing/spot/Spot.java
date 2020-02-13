@@ -1,4 +1,4 @@
-package com.sonalake.windsurfing.weather;
+package com.sonalake.windsurfing.spot;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

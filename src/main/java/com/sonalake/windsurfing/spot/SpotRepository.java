@@ -1,4 +1,4 @@
-package com.sonalake.windsurfing.weather;
+package com.sonalake.windsurfing.spot;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

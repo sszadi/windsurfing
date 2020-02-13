@@ -1,4 +1,4 @@
-package com.sonalake.windsurfing.weather;
+package com.sonalake.windsurfing.spot;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,6 @@ class SpotRestController {
 		return spotResponse;
 
 	}
-	// response: place name, wartość klucza daily
 
 	private final SpotService spotService;
 }

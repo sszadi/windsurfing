@@ -1,4 +1,4 @@
-package com.sonalake.windsurfing.weather;
+package com.sonalake.windsurfing.forecast;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,15 +15,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service
 @Slf4j
-class ForecastRestClient {
+public class ForecastRestClient {
 
-	DailyForecast getForecast(double latitude, double longitude, LocalDate date) {
+	public ForecastData getForecast(double latitude, double longitude, LocalDate date) {
 		try {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(org.springframework.http.MediaType.APPLICATION_JSON);
@@ -31,12 +32,14 @@ class ForecastRestClient {
 			ResponseEntity<ForecastResponse> response = restTemplate.exchange(getUriBuilder().buildAndExpand(buildParams(latitude, longitude, date)).toUri(), HttpMethod.GET, entity, ForecastResponse.class);
 
 			ForecastResponse forecastResponse = response.getBody();
-			if (response.getStatusCode() == HttpStatus.OK && Objects.nonNull(forecastResponse)) {
-				log.debug("Forecast response for latitude {}, longitude {}, date {} = {}", latitude, longitude, date, forecastResponse);
-				return forecastResponse.getDaily();
+			if (response.getStatusCode() == HttpStatus.OK && Objects.nonNull(forecastResponse) && Objects.nonNull(forecastResponse.getDaily())) {
+				List<ForecastData> forecastData = forecastResponse.getDaily().getData();
+				log.info("Forecast response for latitude {}, longitude {}, date {} = {}", latitude, longitude, date, forecastData);
+				return forecastData
+					.stream().findFirst().orElseThrow(IllegalAccessError::new);
 			}
 
-			return new DailyForecast();
+			return new ForecastData();
 		} catch (HttpStatusCodeException httpStatusException) {
 			//todo obsluga bledow
 			log.info("Darksky only return HTTPStatus code");
@@ -54,7 +57,8 @@ class ForecastRestClient {
 	private UriComponentsBuilder getUriBuilder() {
 		return UriComponentsBuilder.fromHttpUrl(apiUrl)
 			.path(apiKey)
-			.path("{latitude},{longitude},{date}");
+			.path("{latitude},{longitude},{date}")
+			.queryParam("units", "si");
 	}
 
 	private static final String LATITUDE = "latitude";
