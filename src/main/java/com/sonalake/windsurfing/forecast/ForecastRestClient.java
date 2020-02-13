@@ -1,5 +1,7 @@
 package com.sonalake.windsurfing.forecast;
 
+import com.sonalake.windsurfing.exception.ExternalServiceException;
+import com.sonalake.windsurfing.exception.ExternalServiceInvocationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,18 +43,16 @@ public class ForecastRestClient {
 
 			return new ForecastData();
 		} catch (HttpStatusCodeException httpStatusException) {
-			//todo obsluga bledow
-			log.info("Darksky only return HTTPStatus code");
-			throw new IllegalArgumentException();
-//			throw new ExternalServiceInvocationException(FORECAST_IO_SERVICE_NAME, httpStatusEx.getRawStatusCode());
+			log.error("Service invocation failed", httpStatusException);
+			throw new ExternalServiceInvocationException(SERVICE_NAME, httpStatusException.getRawStatusCode());
 		} catch (Exception ex) {
-			//todo This is thrown when can't even get to API (e.g. network error)!
-			log.info("nanan", ex);
-			throw new IllegalArgumentException();
+			log.error("External service exception", ex);
+			throw new ExternalServiceException(SERVICE_NAME, ex);
 		}
 	}
 
 	private static final String DATE = "date";
+	private static final String SERVICE_NAME = "FORECAST";
 
 	private UriComponentsBuilder getUriBuilder() {
 		return UriComponentsBuilder.fromHttpUrl(apiUrl)
