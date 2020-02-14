@@ -19,9 +19,9 @@ class SpotService {
 	SpotResponse findBestSpotToWindsurfing(LocalDate date) {
 		List<Spot> spotsToCheckUp = spotRepository.findAll();
 		log.debug("Find best spot to windsurfing from: {}", spotsToCheckUp);
-		Map<String, ForecastData> forecasts = spotsToCheckUp.stream().collect(Collectors.toMap
+		Map<String, ForecastData> forecastMap = spotsToCheckUp.stream().collect(Collectors.toMap
 			(Spot::getName, s -> forecastDataRetriever.getForecast(s.getLatitude(), s.getLongitude(), date)));
-		return bestSpotCalculator.calculateBestSpot(forecasts);
+		return bestSpotCalculator.calculateBestSpot(forecastMap);
 	}
 
 	private final ForecastRestClient forecastDataRetriever;

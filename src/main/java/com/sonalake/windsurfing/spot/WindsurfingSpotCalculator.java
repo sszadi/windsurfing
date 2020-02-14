@@ -1,7 +1,6 @@
 package com.sonalake.windsurfing.spot;
 
 import com.sonalake.windsurfing.forecast.ForecastData;
-import com.sonalake.windsurfing.spot.SpotResponse;
 import org.apache.commons.lang3.Range;
 import org.springframework.stereotype.Component;
 
@@ -13,9 +12,9 @@ import java.util.function.Predicate;
 @Component
 class WindsurfingSpotCalculator {
 
-	SpotResponse calculateBestSpot(Map<String, ForecastData> forecasts) {
+	SpotResponse calculateBestSpot(Map<String, ForecastData> forecastMap) {
 		Map.Entry<String, ForecastData> result =
-			forecasts.entrySet().stream()
+			forecastMap.entrySet().stream()
 				.filter(isSpotRelevant())
 				.max(Comparator.comparing(this::pickTheBestValue))
 				.orElse(new AbstractMap.SimpleEntry<>(null, null));
@@ -24,7 +23,7 @@ class WindsurfingSpotCalculator {
 	}
 
 	private static final int WIND_SPEED_FACTOR = 3;
-	private static final int MIN_TEMPERATURE = 0;
+	private static final int MIN_TEMPERATURE = 5;
 	private static final int MAX_TEMPERATURE = 35;
 	private static final float MIN_WIND_SPEED = 5F;
 	private static final float MAX_WIND_SPEED = 18F;

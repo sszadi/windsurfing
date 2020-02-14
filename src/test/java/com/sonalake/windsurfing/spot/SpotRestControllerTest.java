@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class SpotRestControllerTest {
 
 
-	public static final String DATE = "2020-04-23";
+	private static final String DATE = "2020-04-23";
 
 	@Test
 	public void whenGetStationStateThenReturnJsonArray()
@@ -60,8 +60,10 @@ public class SpotRestControllerTest {
 
 	@Test
 	public void shouldReturnServiceUnavailableCodeForServiceInvocationException() throws Exception {
+		// given
 		when(service.findBestSpotToWindsurfing(any())).thenThrow(new ExternalServiceInvocationException("test", 500));
 
+		// when then
 		mvc.perform(get("/api/windsurfing/spot")
 			.param("date", DATE)
 			.contentType(MediaType.APPLICATION_JSON))
@@ -70,8 +72,11 @@ public class SpotRestControllerTest {
 
 	@Test
 	public void shouldReturnServiceUnavailableCodeForServiceException() throws Exception {
+		// given
 		when(service.findBestSpotToWindsurfing(any())).thenThrow(new ExternalServiceException("test", new Exception()));
 
+
+		// when then
 		mvc.perform(get("/api/windsurfing/spot")
 			.param("date", DATE)
 			.contentType(MediaType.APPLICATION_JSON))
