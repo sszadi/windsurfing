@@ -2,7 +2,6 @@ package com.sonalake.windsurfing;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,10 +13,7 @@ public class WindsurfingApplication {
 	}
 
 	@Bean
-	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-		return builder.build();
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
 	}
 }
-
-
-//https://api.darksky.net/forecast/aa1321e9abac62c00bd7c75d5d5e83f8/37.8267,-122.4233

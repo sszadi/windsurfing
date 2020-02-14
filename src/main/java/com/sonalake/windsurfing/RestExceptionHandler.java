@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler({ExternalServiceInvocationException.class, ExternalServiceException.class})
-	protected ResponseEntity<Object> handleEntityNotFound(
+	protected ResponseEntity<Object> handleExternalServiceException(
 		Exception ex, WebRequest request) {
 		return handleExceptionInternal(ex, null, new HttpHeaders(), HttpStatus.SERVICE_UNAVAILABLE, request);
 	}
