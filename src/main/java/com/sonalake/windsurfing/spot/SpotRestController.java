@@ -16,6 +16,8 @@ import java.time.LocalDate;
 @Slf4j
 class SpotRestController {
 
+	private final SpotService spotService;
+
 	@GetMapping("spot")
 	public SpotResponse findBestPlaceToWindsurfing(
 		@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
@@ -25,6 +27,4 @@ class SpotRestController {
 		return spotResponse;
 
 	}
-
-	private final SpotService spotService;
 }

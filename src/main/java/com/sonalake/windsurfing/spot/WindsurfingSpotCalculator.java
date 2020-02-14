@@ -22,12 +22,6 @@ class WindsurfingSpotCalculator {
 		return SpotResponse.builder().spotName(result.getKey()).forecast(result.getValue()).build();
 	}
 
-	private static final int WIND_SPEED_FACTOR = 3;
-	private static final int MIN_TEMPERATURE = 5;
-	private static final int MAX_TEMPERATURE = 35;
-	private static final float MIN_WIND_SPEED = 5F;
-	private static final float MAX_WIND_SPEED = 18F;
-
 	private Predicate<Map.Entry<String, ForecastData>> isSpotRelevant() {
 		Range<Float> windSpeedRange = Range.between(MIN_WIND_SPEED, MAX_WIND_SPEED);
 		return f -> {
@@ -47,4 +41,10 @@ class WindsurfingSpotCalculator {
 	private float getMeanTemperature(Float minTemperature, Float maxTemperature) {
 		return (minTemperature + maxTemperature) / 2;
 	}
+
+	private static final int WIND_SPEED_FACTOR = 3;
+	private static final int MIN_TEMPERATURE = 5;
+	private static final int MAX_TEMPERATURE = 35;
+	private static final float MIN_WIND_SPEED = 5F;
+	private static final float MAX_WIND_SPEED = 18F;
 }

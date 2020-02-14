@@ -16,6 +16,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 class SpotService {
 
+	private final ForecastRestClient forecastDataRetriever;
+	private final WindsurfingSpotCalculator bestSpotCalculator;
+	private final SpotRepository spotRepository;
+
 	SpotResponse findBestSpotToWindsurfing(LocalDate date) {
 		List<Spot> spotsToCheckUp = spotRepository.findAll();
 		log.debug("Find best spot to windsurfing from: {}", spotsToCheckUp);
@@ -24,8 +28,4 @@ class SpotService {
 		return bestSpotCalculator.calculateBestSpot(forecastMap);
 	}
 
-	private final ForecastRestClient forecastDataRetriever;
-	private final WindsurfingSpotCalculator bestSpotCalculator;
-	private final SpotRepository spotRepository;
 }
-//todo pola na gorze klasy

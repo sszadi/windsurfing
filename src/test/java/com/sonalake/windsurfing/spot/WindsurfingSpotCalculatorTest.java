@@ -18,24 +18,22 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-/**
- * 4. Kryteria wyboru miejsca:
- * Jeśli prędkość wiatru nie zawiera się w przedziale <5; 18> (m/s), a temperatura w przedziale <5; 35> (°C)
- * to dana lokalizacja nie nadaje się do surfingu.
- * Natomiast jeśli są w ustalonych przedziałach, wtedy wygrywa miejsce, które ma wyższą wartość obliczoną ze wzoru:
- * v * 3 + (tempLow + tempHigh)/2
- * gdzie v, to prędkość wiatru w m/s w danym dniu,
- * a tempLow i tempHigh, to odpowiednio najniższa i najwyższa temperatura prognozowana danego dnia w stopniach Celsjuszach
- *
- *
- * 2. Jedno miejsce nie spełnia pierwszego kryterium
- * 3. Jedno miejsce nie spełnia, dwa spełniają, wygrywa najlepsze
- */
-
 @RunWith(Parameterized.class)
 @SpringBootTest
 public class WindsurfingSpotCalculatorTest {
 
+
+	@Rule
+	public final SpringMethodRule methodRule = new SpringMethodRule();
+
+	@Parameterized.Parameter
+	public Map<String, ForecastData> forecastMap;
+
+	@Parameterized.Parameter(1)
+	public SpotResponse expectedSpotResponse;
+
+	@Autowired
+	private WindsurfingSpotCalculator windsurfingSpotCalculator;
 
 	@Parameterized.Parameters
 	public static Collection input() {
@@ -73,14 +71,4 @@ public class WindsurfingSpotCalculatorTest {
 		assertEquals(expectedSpotResponse, spotResponse);
 	}
 
-	@Rule
-	public final SpringMethodRule methodRule = new SpringMethodRule();
-	@Parameterized.Parameter
-	public Map<String, ForecastData> forecastMap;
-
-	@Parameterized.Parameter(1)
-	public SpotResponse expectedSpotResponse;
-
-	@Autowired
-	private WindsurfingSpotCalculator windsurfingSpotCalculator;
 }

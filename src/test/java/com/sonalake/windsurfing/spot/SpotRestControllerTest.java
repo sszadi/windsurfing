@@ -28,6 +28,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(SpotRestController.class)
 public class SpotRestControllerTest {
 
+	@Autowired
+	private MockMvc mvc;
+
+	@MockBean
+	private SpotService service;
 
 	private static final String DATE = "2020-04-23";
 
@@ -89,8 +94,4 @@ public class SpotRestControllerTest {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		return LocalDate.parse(SpotRestControllerTest.DATE, formatter);
 	}
-	@Autowired
-	private MockMvc mvc;
-	@MockBean
-	private SpotService service;
 }
